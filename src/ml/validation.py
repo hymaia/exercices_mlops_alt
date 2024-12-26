@@ -1,5 +1,9 @@
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error, mean_squared_error, mean_absolute_percentage_error
+from sklearn.metrics import (
+    mean_absolute_error,
+    mean_squared_error,
+    mean_absolute_percentage_error,
+)
 import pandas as pd
 
 
@@ -11,7 +15,9 @@ def split_train_and_val_sets(df_train: pd.DataFrame) -> tuple:
     """
     x_train_val = df_train.drop(columns=["Weekly_Sales"])
     y_train_val = df_train["Weekly_Sales"]
-    x_train, x_val, y_train, y_val = train_test_split(x_train_val, y_train_val, test_size=0.2, random_state=42)
+    x_train, x_val, y_train, y_val = train_test_split(
+        x_train_val, y_train_val, test_size=0.2, random_state=42
+    )
     return x_train, x_val, y_train, y_val
 
 

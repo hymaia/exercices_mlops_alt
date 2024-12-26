@@ -5,7 +5,6 @@ import pandas as pd
 
 
 class FeaturesEngineering:
-
     def __init__(self):
         self.store_target_encoder = None
         self.dept_target_encoder = None

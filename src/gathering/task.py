@@ -2,16 +2,19 @@ import pandas as pd
 
 
 class DataCollector:
-
     def __init__(self):
         pass
 
     @staticmethod
-    def merge_sales_and_features(df_sales: pd.DataFrame, df_features: pd.DataFrame) -> pd.DataFrame:
+    def merge_sales_and_features(
+        df_sales: pd.DataFrame, df_features: pd.DataFrame
+    ) -> pd.DataFrame:
         return df_sales.merge(df_features, on=["Store", "Date", "IsHoliday"])
 
     @staticmethod
-    def merge_sales_and_stores(df_sales: pd.DataFrame, df_stores: pd.DataFrame) -> pd.DataFrame:
+    def merge_sales_and_stores(
+        df_sales: pd.DataFrame, df_stores: pd.DataFrame
+    ) -> pd.DataFrame:
         return df_sales.merge(df_stores, on=["Store"])
 
     def gather_data(self, path_dataset_sales, path_features, path_store) -> tuple:

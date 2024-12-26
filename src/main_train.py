@@ -16,7 +16,9 @@ def main():
     path_train_set = "../data/raw/train.csv"
     path_features_set = "../data/raw/features.csv"
     path_stores_set = "../data/raw/stores.csv"
-    df_train = DataCollector().gather_data(path_train_set, path_features_set, path_stores_set)
+    df_train = DataCollector().gather_data(
+        path_train_set, path_features_set, path_stores_set
+    )
     x_train, x_val, y_train, y_val = split_train_and_val_sets(df_train)
 
     # clean data

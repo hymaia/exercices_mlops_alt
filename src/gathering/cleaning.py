@@ -2,7 +2,6 @@ import pandas as pd
 
 
 class DataCleaner:
-
     def __init__(self):
         self.mean_cpi = None
         self.mean_unemployment = None
@@ -23,7 +22,7 @@ class DataCleaner:
         :param df: (DataFrame) to clean missing values
         :return: df (DataFrame) cleaned with no missing values
         """
-        list_markdown_cols = ['MarkDown%s' % i for i in range(1, 6)]
+        list_markdown_cols = ["MarkDown%s" % i for i in range(1, 6)]
         df[list_markdown_cols] = df[list_markdown_cols].fillna(0.0)
         df["CPI"].fillna(self.mean_cpi, inplace=True)
         df["Unemployment"].fillna(self.mean_unemployment, inplace=True)
@@ -32,4 +31,3 @@ class DataCleaner:
             raise ValueError("There are still missing values in the DataFrame.")
 
         return df
-

@@ -27,15 +27,15 @@ jobs:
         run: |
           curl -sSL https://install.python-poetry.org | python -
 
-      # Étape 3 : Installer les dépendances avec poetry
+      # Étape 4 : Installer les dépendances avec poetry
       - name: Install dependencies
         run: |
           poetry install --no-interaction --no-root
 
-      # Étape 4 : Lancer le linter
-      - name: Run linter
+      # Étape 5 : Lancer le linter
+      - name: Run ruff linter
         run: |
-          poetry run ruff check .
+          poetry run ruff format --preview src/ tests/ 
 
       # Étape 5 : Lancer les tests unitaires
       - name: Run unit tests
