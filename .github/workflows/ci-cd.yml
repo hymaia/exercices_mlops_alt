@@ -20,7 +20,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10" # Vous pouvez ajuster la version selon vos besoins
+          python-version: "3.11" # Vous pouvez ajuster la version selon vos besoins
 
       # Étape 3 : installer poetry
       - name: Install Poetry
@@ -28,7 +28,7 @@ jobs:
           curl -sSL https://install.python-poetry.org | python -
 
       # Étape 3 : Installer les dépendances avec poetry
-      - name: Install dependencies wit poetry
+      - name: Install dependencies
         run: |
           poetry install --no-interaction --no-root
 
