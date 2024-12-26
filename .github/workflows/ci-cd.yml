@@ -1,0 +1,44 @@
+name: CI/CD for Machine Learning Project
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+      # Étape 1 : Vérifiez le dépôt du code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Étape 2 : Configurer Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10" # Vous pouvez ajuster la version selon vos besoins
+
+      # Étape 3 : installer poetry
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python -
+          echo "::add-path::${HOME}/.local/bin"
+
+      # Étape 3 : Installer les dépendances avec poetry
+      - name: Install dependencies wit poetry
+        run: |
+          poetry install --no-interaction --no-root
+
+      # Étape 4 : Lancer le linter
+      - name: Run linter
+        run: |
+          poetry run ruff check .
+
+      # Étape 5 : Lancer les tests unitaires
+      - name: Run unit tests
+        run: |
+          poetry run pytest
