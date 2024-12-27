@@ -35,9 +35,9 @@ jobs:
       # Étape 5 : Lancer le linter
       - name: Run ruff linter
         run: |
-          poetry run ruff format --preview src/ tests/ 
+          poetry run ruff format --preview mlops_exo/ tests/ 
 
-      # Étape 5 : Lancer les tests unitaires
+      # Étape 6 : Lancer les tests unitaires
       - name: Run unit tests
         run: |
           poetry run pytest

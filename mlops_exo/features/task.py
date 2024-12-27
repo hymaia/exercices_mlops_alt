@@ -1,6 +1,6 @@
-from src.features.encoding import DeptTargetEncoder, StoreTargetEncoder
-from src.features.markdown import add_total_markdown
-from src.features.holidays import HolidaysComputer
+from mlops_exo.features.encoding import DeptTargetEncoder, StoreTargetEncoder
+from mlops_exo.features.markdown import add_total_markdown
+from mlops_exo.features.holidays import HolidaysComputer
 import pandas as pd
 
 

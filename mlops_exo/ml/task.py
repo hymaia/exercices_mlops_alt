@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
+import mlflow
 
 
 def train_model(x_train: pd.DataFrame, y_train: pd.Series) -> RandomForestRegressor:
@@ -9,8 +10,20 @@ def train_model(x_train: pd.DataFrame, y_train: pd.Series) -> RandomForestRegres
     :param y_train: (Series) containing the train target
     :return: (RandomForestRegressor) trained model
     """
+    n_estimators = 10
+    max_depth = 20
+    min_samples_split = 10
+    random_state = 42
+
+    # TODO : exercice 3.3 : ajoutez les hyper-paramètres dans MLflow
+    mlflow.log_param("n_estimators", n_estimators)
+    mlflow.log_param("max_depth", max_depth)
+    mlflow.log_param("min_samples_split", min_samples_split)
+    mlflow.log_param("random_state", random_state)
+
+    # entrainement du modèle
     model = RandomForestRegressor(
-        n_estimators=10, random_state=42, max_depth=20, min_samples_split=10, n_jobs=-1
+        n_estimators=n_estimators, random_state=random_state, max_depth=max_depth, min_samples_split=min_samples_split, n_jobs=-1
     )
     model.fit(x_train, y_train)
     return model

@@ -1,10 +1,10 @@
 import pandas as pd
 import joblib
-from src.gathering.task import DataCollector
-from src.gathering.cleaning import DataCleaner
-from src.features.task import FeaturesEngineering
-from src.ml.task import train_model
-from src.ml.validation import split_train_and_val_sets, compute_metrics
+from mlops_exo.gathering.task import DataCollector
+from mlops_exo.gathering.cleaning import DataCleaner
+from mlops_exo.features.task import FeaturesEngineering
+from mlops_exo.ml.task import train_model
+from mlops_exo.ml.validation import split_train_and_val_sets, compute_metrics
 
 
 def main():
@@ -30,8 +30,8 @@ def main():
     features_transformer = FeaturesEngineering().fit(x_train, y_train)
     x_train = features_transformer.transform(x_train)
     x_val = features_transformer.transform(x_val)
-    x_train.to_excel("../data/processed/x_train_processed.xlsx", index=False)
-    x_val.to_excel("../data/processed/x_val_processed.xlsx", index=False)
+    x_train.head(100).to_excel("../data/processed/x_train_processed.xlsx", index=False)
+    x_val.head(100).to_excel("../data/processed/x_val_processed.xlsx", index=False)
 
     # train model
     model = train_model(x_train, y_train)
@@ -40,13 +40,13 @@ def main():
 
     # display metrics
     print("Train set :")
-    compute_metrics(y_train, pred_train)
+    compute_metrics(y_train, pred_train, set="train")
     print("Validation set :")
-    compute_metrics(y_val, pred_val)
+    compute_metrics(y_val, pred_val, set="val")
 
     # save predictions and artefacts
-    pd.DataFrame(pred_train).to_excel("../data/processed/pred_train.xlsx", index=False)
-    pd.DataFrame(pred_val).to_excel("../data/processed/pred_val.xlsx", index=False)
+    pd.DataFrame(pred_train).head(100).to_excel("../data/processed/pred_train.xlsx", index=False)
+    pd.DataFrame(pred_val).head(100).to_excel("../data/processed/pred_val.xlsx", index=False)
     joblib.dump(model, "../models/model.pkl")
 
     # save cleaner et features_transformer

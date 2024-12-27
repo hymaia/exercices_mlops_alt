@@ -5,6 +5,7 @@ from sklearn.metrics import (
     mean_absolute_percentage_error,
 )
 import pandas as pd
+import mlflow
 
 
 def split_train_and_val_sets(df_train: pd.DataFrame) -> tuple:
@@ -21,7 +22,7 @@ def split_train_and_val_sets(df_train: pd.DataFrame) -> tuple:
     return x_train, x_val, y_train, y_val
 
 
-def compute_metrics(y: pd.Series, pred: pd.Series):
+def compute_metrics(y: pd.Series, pred: pd.Series, set="train"):
     """
     Computes the main regression metrics
     :param y: (Series) containing the target
@@ -31,6 +32,11 @@ def compute_metrics(y: pd.Series, pred: pd.Series):
     mae = mean_absolute_error(y, pred)
     mse = mean_squared_error(y, pred)
     mape = mean_absolute_percentage_error(y, pred)
-    print(f"Mean Absolute Error: {mae}")
-    print(f"Mean Square Error: {mse}")
-    print(f"Mean Absolute Percentage Error: {mape}")
+    print(f"Mean Absolute Error ({set}) : {mae}")
+    print(f"Mean Square Error ({set}) : {mse}")
+    print(f"Mean Absolute Percentage Error ({set}): {mape}")
+
+    # TODO : exercice 3.3 : ajoutez les métriques dans MLflow
+    mlflow.log_metric(f"mae_{set}", mae)
+    mlflow.log_metric(f"mse_{set}", mse)
+    mlflow.log_metric(f"mape_{set}", mape)
