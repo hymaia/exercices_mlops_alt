@@ -10,6 +10,7 @@ def train_model(x_train: pd.DataFrame, y_train: pd.Series) -> RandomForestRegres
     :param y_train: (Series) containing the train target
     :return: (RandomForestRegressor) trained model
     """
+    print("training random forest")
     n_estimators = 10
     max_depth = 20
     min_samples_split = 10
@@ -20,6 +21,9 @@ def train_model(x_train: pd.DataFrame, y_train: pd.Series) -> RandomForestRegres
     mlflow.log_param("max_depth", max_depth)
     mlflow.log_param("min_samples_split", min_samples_split)
     mlflow.log_param("random_state", random_state)
+
+    print("observation example")
+    print(x_train.iloc[0].to_json())
 
     # entrainement du modèle
     model = RandomForestRegressor(

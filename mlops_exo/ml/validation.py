@@ -6,6 +6,7 @@ from sklearn.metrics import (
 )
 import pandas as pd
 import mlflow
+import numpy as np
 
 
 def split_train_and_val_sets(df_train: pd.DataFrame) -> tuple:
@@ -32,9 +33,9 @@ def compute_metrics(y: pd.Series, pred: pd.Series, set="train"):
     mae = mean_absolute_error(y, pred)
     mse = mean_squared_error(y, pred)
     mape = mean_absolute_percentage_error(y, pred)
-    print(f"Mean Absolute Error ({set}) : {mae}")
-    print(f"Mean Square Error ({set}) : {mse}")
-    print(f"Mean Absolute Percentage Error ({set}): {mape}")
+    print(f"Mean Absolute Error ({set}) : {np.round(mae, 0)}")
+    print(f"Mean Square Error ({set}) : {np.round(mse, 0)}")
+    print(f"Mean Absolute Percentage Error ({set}): {np.round(mape, 0)}")
 
     # TODO : exercice 3.3 : ajoutez les métriques dans MLflow
     mlflow.log_metric(f"mae_{set}", mae)
