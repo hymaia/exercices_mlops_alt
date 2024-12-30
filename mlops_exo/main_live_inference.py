@@ -3,6 +3,8 @@ import requests
 import joblib
 import os
 import warnings
+import mlflow
+import time
 warnings.filterwarnings('ignore')
 
 
@@ -51,35 +53,48 @@ print(">>> Prédiction obtenue : %s " % response.json())
 # PART 2 : inference with an inference pipeline          #
 ##########################################################
 
+# sys.exit(0)  # TODO 4.1.D : supprimez cette ligne
+
 print("\n----- PARTIE 2 : prédiction avec un script d'inférence")
 data_sales_2 = {
     "dataframe_records": [{
                         "Store": 10,
                         "Dept": 5,
-                        "Date": "2011-04-01"
-                         }]
+                        "Date": "2011-04-01",
+                        "IsHoliday": False,
+                        }]
 }
+df_sales_2 = pd.DataFrame(data_sales_2["dataframe_records"])
 
 
 # Chemin vers le run MLflow
-mlflow_run_id = "6e9bbd60083546f48027c00eb038a4ac"
+mlflow_run_id = "daa3e9c197674fada67fe649688186e3"  # TODO 4.1.D : placez le mlflow run id de votre modèle.
 artifact_uri = f"mlruns/0/{mlflow_run_id}/artifacts"
 
 
-# Load cleaner and transformer and apply it on data
+# TODO 4.1.D : chargez tous les artefacts
 cleaner = joblib.load(os.path.join(artifact_uri, "cleaner.pkl"))
 features_transformer = joblib.load(os.path.join(artifact_uri, "features_transformer.pkl"))
 df_features = pd.read_csv(os.path.join(artifact_uri, "features.csv"))
 df_stores = pd.read_csv(os.path.join(artifact_uri, "stores.csv"))
-df_sales_2 = pd.DataFrame(data_sales_2["dataframe_records"])
-df_sales_2 = df_sales_2.merge(df_features, on=["Store", "Date"])
-df_sales_2 = df_sales_2.merge(df_stores, on=["Store"])
-df_sales_2 = cleaner.transform(df_sales_2)
-df_sales_2 = features_transformer.transform(df_sales_2)
-data_json_2 = {"dataframe_records": df_sales_2.to_dict(orient="records")}
 
-# apply transformations
+
+# TODO 4.1.D : écrire la fonction d'application des artefacts (prepare_and_transform_data)
+
+def prepare_and_transform_data(df_sales, df_features, df_stores):
+
+    df_sales = df_sales.merge(df_features, on=["Store", "Date", "IsHoliday"])
+    df_sales = df_sales.merge(df_stores, on=["Store"])
+    df_sales = cleaner.transform(df_sales)
+    df_sales = features_transformer.transform(df_sales)
+    return df_sales
+
+
+df_sales_2 = prepare_and_transform_data(df_sales_2, df_features, df_stores)
+
+
 # Envoyez une requête POST à l'URL du modèle
+data_json_2 = {"dataframe_records": df_sales_2.to_dict(orient="records")}
 response = requests.post("http://0.0.0.0:5050/invocations", json=data_json_2)
 
 # Affichez la prédiction
@@ -88,3 +103,54 @@ print("Prédiction obtenue : %s " % response.json())
 ##########################################################
 # PART 3 : alerting et monitoring                        #
 ##########################################################
+
+# sys.exit(0)  # TODO 4.2 : supprimez cette ligne
+
+
+def predict_with_monitoring(data_json_to_predict: dict):
+    """
+    Predicts a given observations, logs the latency and the error
+    :param data_json_to_predict: (dict) already processed.
+    :return: (float) prediction
+    """
+    # prepare data and log latency
+    start_time = time.time()
+    try:
+        prediction = requests.post("http://0.0.0.0:5050/invocations", json=data_json_to_predict).json()["predictions"][0]
+        is_error = 0
+    except:
+        prediction = 0
+        is_error = 1
+    latency = time.time() - start_time
+    is_very_high_value = 1 if prediction >= 50000 else 0
+    log_response_info(latency, is_error, is_very_high_value)
+
+    return prediction
+
+
+def log_response_info(latency: float, is_error: float, is_very_high_value: float):
+    """
+    Logs the metrics latency, is_error and is_very_high_value is MLFlow.
+    """
+    # TODO 4.2 : logguez les métriques dans MLFLow
+    mlflow.log_metric("latency", latency)
+    mlflow.log_metric("is_error", is_error)
+    mlflow.log_metric("is_very_high_value", is_very_high_value)
+
+
+# Définissez cette expérimentation comme active
+mlflow.set_experiment("4.2 monitoring")
+with mlflow.start_run() as run:
+
+    # on charge le jeu de test
+    print("\n----- PARTIE 3 : monitoring and alerting")
+    df_test = pd.read_csv("../data/raw/test.csv")
+
+    # on envoie chaque observation tous les 0.1 secondes
+    for i in range(100):
+        time.sleep(0.1)
+        current_instance = pd.DataFrame(df_test.iloc[i]).T
+        df_processed = prepare_and_transform_data(current_instance, df_features, df_stores)
+        data_json_to_predict = {"dataframe_records": df_processed.to_dict(orient="records")}
+        prediction = predict_with_monitoring(data_json_to_predict)
+        print("live inference (%s) : prediction = %s" % (i, prediction))
