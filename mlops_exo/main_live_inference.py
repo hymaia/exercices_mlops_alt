@@ -2,6 +2,7 @@ import pandas as pd
 import requests
 import joblib
 import os
+import sys
 import warnings
 import mlflow
 import time
@@ -53,7 +54,7 @@ print(">>> Prédiction obtenue : %s " % response.json())
 # PART 2 : inference with an inference pipeline          #
 ##########################################################
 
-# sys.exit(0)  # TODO 4.1.D : supprimez cette ligne
+sys.exit(0)  # TODO 4.1.D : supprimez cette ligne
 
 print("\n----- PARTIE 2 : prédiction avec un script d'inférence")
 data_sales_2 = {
@@ -73,24 +74,27 @@ artifact_uri = f"mlruns/0/{mlflow_run_id}/artifacts"
 
 
 # TODO 4.1.D : chargez tous les artefacts
-cleaner = joblib.load(os.path.join(artifact_uri, "cleaner.pkl"))
-features_transformer = joblib.load(os.path.join(artifact_uri, "features_transformer.pkl"))
-df_features = pd.read_csv(os.path.join(artifact_uri, "features.csv"))
-df_stores = pd.read_csv(os.path.join(artifact_uri, "stores.csv"))
-
+# ------------------------------------------------------------------------------------
+#
+#
+#
+#
+# ------------------------------------------------------------------------------------
 
 # TODO 4.1.D : écrire la fonction d'application des artefacts (prepare_and_transform_data)
+# def prepare_and_transform_data():
+# ------------------------------------------------------------------------------------
+#
+#
+#
+#
+# ------------------------------------------------------------------------------------
 
-def prepare_and_transform_data(df_sales, df_features, df_stores):
+# TODO 4.1.D : appliquer la fonction d'application des artefacts (prepare_and_transform_data)
+# ------------------------------------------------------------------------------------
+#
+# ------------------------------------------------------------------------------------
 
-    df_sales = df_sales.merge(df_features, on=["Store", "Date", "IsHoliday"])
-    df_sales = df_sales.merge(df_stores, on=["Store"])
-    df_sales = cleaner.transform(df_sales)
-    df_sales = features_transformer.transform(df_sales)
-    return df_sales
-
-
-df_sales_2 = prepare_and_transform_data(df_sales_2, df_features, df_stores)
 
 
 # Envoyez une requête POST à l'URL du modèle
@@ -104,7 +108,7 @@ print("Prédiction obtenue : %s " % response.json())
 # PART 3 : alerting et monitoring                        #
 ##########################################################
 
-# sys.exit(0)  # TODO 4.2 : supprimez cette ligne
+sys.exit(0)  # TODO 4.2 : supprimez cette ligne
 
 
 def predict_with_monitoring(data_json_to_predict: dict):
@@ -133,9 +137,10 @@ def log_response_info(latency: float, is_error: float, is_very_high_value: float
     Logs the metrics latency, is_error and is_very_high_value is MLFlow.
     """
     # TODO 4.2 : logguez les métriques dans MLFLow
-    mlflow.log_metric("latency", latency)
-    mlflow.log_metric("is_error", is_error)
-    mlflow.log_metric("is_very_high_value", is_very_high_value)
+    # ------------------------------------------------------------------------------------
+    #
+    #
+    # ------------------------------------------------------------------------------------
 
 
 # Définissez cette expérimentation comme active

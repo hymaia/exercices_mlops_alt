@@ -1,4 +1,3 @@
-import mlflow.dspy
 import pandas as pd
 import joblib
 from mlops_exo.gathering.task import DataCollector
@@ -60,17 +59,23 @@ def main():
     pd.DataFrame(pred_train).head(100).to_excel("../data/processed/pred_train.xlsx", index=False)
     pd.DataFrame(pred_val).head(100).to_excel("../data/processed/pred_val.xlsx", index=False)
 
-    # sve model TODO - exercice 4.1.A : enregistrer le modèle dans MLFlow
+    # sve model
     joblib.dump(model, "../models/model.pkl")
-    mlflow.sklearn.log_model(model, "model")
+    # TODO - exercice 4.1.A : enregistrer le modèle dans MLFlow
+    # ------------------------------------------------------------------------------------
+    #
+    # ------------------------------------------------------------------------------------
 
-    # save artefacts # TODO - exercice 4.1.B : enregistrer les artifacts dans MLFlow
+    # save artefacts
     joblib.dump(cleaner, "../models/cleaner.pkl")
     joblib.dump(features_transformer, "../models/features_transformer.pkl")
-    mlflow.log_artifact("../models/cleaner.pkl")
-    mlflow.log_artifact("../models/features_transformer.pkl")
-    mlflow.log_artifact("../data/raw/features.csv")
-    mlflow.log_artifact("../data/raw/stores.csv")
+    # TODO - exercice 4.1.B : enregistrer les artifacts dans MLFlow
+    # ------------------------------------------------------------------------------------
+    #
+    #
+    #
+    #
+    # ------------------------------------------------------------------------------------
 
 
 if __name__ == "__main__":

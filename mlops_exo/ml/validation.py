@@ -5,7 +5,6 @@ from sklearn.metrics import (
     mean_absolute_percentage_error,
 )
 import pandas as pd
-import mlflow
 import numpy as np
 
 
@@ -37,7 +36,8 @@ def compute_metrics(y: pd.Series, pred: pd.Series, set="train"):
     print(f"Mean Square Error ({set}) : {np.round(mse, 0)}")
     print(f"Mean Absolute Percentage Error ({set}): {np.round(mape, 0)}")
 
-    # TODO : exercice 3.3 : ajoutez les métriques dans MLflow
-    mlflow.log_metric(f"mae_{set}", mae)
-    mlflow.log_metric(f"mse_{set}", mse)
-    mlflow.log_metric(f"mape_{set}", mape)
+    # TODO : exercice 3.3 : ajoutez les hyper-paramètres dans MLflow
+    # ------------------------------------------------------------------------------------
+    #
+    #
+    # ------------------------------------------------------------------------------------
