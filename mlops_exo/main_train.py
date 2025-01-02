@@ -35,14 +35,16 @@ def main():
     x_val = features_transformer.transform(x_val)
     print("save x_train_processed.xlsx")
     print("save x_val_processed.xlsx")
-    x_train.head(100).to_excel("../data/processed/x_train_processed.xlsx", index=False)
-    x_val.head(100).to_excel("../data/processed/x_val_processed.xlsx", index=False)
+    x_train.to_parquet("../data/processed/x_train_processed.parquet", index=True)
+    x_val.to_parquet("../data/processed/x_val_processed.parquet", index=True)
+    pd.DataFrame(y_train).to_parquet("../data/processed/y_train.parquet", index=True)
+    pd.DataFrame(y_val).to_parquet("../data/processed/y_val.parquet", index=True)
 
     # train model
     print("\n----- Train model and make predictions")
     model = train_model(x_train, y_train)
-    pred_train = model.predict(x_train)
-    pred_val = model.predict(x_val)
+    pred_train = pd.Series(model.predict(x_train), name="prediction", index=x_train.index)
+    pred_val = pd.Series(model.predict(x_val), name="prediction", index=x_val.index)
 
     # display metrics
     print("\n----- Evaluating model")
@@ -56,8 +58,8 @@ def main():
 
     # save predictions
     print_mlflow_artefact_uri()
-    pd.DataFrame(pred_train).head(100).to_excel("../data/processed/pred_train.xlsx", index=False)
-    pd.DataFrame(pred_val).head(100).to_excel("../data/processed/pred_val.xlsx", index=False)
+    pd.DataFrame(pred_train).to_parquet("../data/processed/pred_train.parquet", index=True)
+    pd.DataFrame(pred_val).to_parquet("../data/processed/pred_val.parquet", index=True)
 
     # sve model
     joblib.dump(model, "../models/model.pkl")

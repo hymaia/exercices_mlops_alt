@@ -31,4 +31,7 @@ class DataCollector:
         df_sales = self.merge_sales_and_features(df_sales, df_features)
         df_sales = self.merge_sales_and_stores(df_sales, df_stores)
 
+        # delete observervations where target < 1000
+        df_sales = df_sales[df_sales["Weekly_Sales"] > 1000]
+
         return df_sales

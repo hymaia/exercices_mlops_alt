@@ -10,7 +10,7 @@ def train_model(x_train: pd.DataFrame, y_train: pd.Series) -> RandomForestRegres
     :return: (RandomForestRegressor) trained model
     """
     print("training random forest")
-    n_estimators = 10
+    n_estimators = 30
     max_depth = 20
     min_samples_split = 10
     random_state = 42
