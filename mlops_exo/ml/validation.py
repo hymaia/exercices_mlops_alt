@@ -8,17 +8,19 @@ import pandas as pd
 import numpy as np
 
 
-def split_train_and_val_sets(df_train: pd.DataFrame) -> tuple:
+def split_train_and_val_sets(df_train_val: pd.DataFrame) -> tuple:
     """
     Splits the train dataset into train and validation sets
-    :param df_train: (Dataframe) containing both the input features and the target
+    :param df_train_val: (Dataframe) containing both the input features and the target
     :return:
     """
-    x_train_val = df_train.drop(columns=["Weekly_Sales"])
-    y_train_val = df_train["Weekly_Sales"]
-    x_train, x_val, y_train, y_val = train_test_split(
-        x_train_val, y_train_val, test_size=0.2, random_state=42
-    )
+    df_train = df_train_val[df_train_val["Date"] <= "2010-12-31"]
+    df_val = df_train_val[df_train_val["Date"] >= "2011-01-01"]
+    x_train = df_train.drop(columns=["Weekly_Sales"])
+    x_val = df_val.drop(columns=["Weekly_Sales"])
+    y_train = df_train["Weekly_Sales"]
+    y_val = df_val["Weekly_Sales"]
+
     return x_train, x_val, y_train, y_val
 
 
