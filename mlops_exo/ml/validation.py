@@ -13,8 +13,8 @@ def split_train_and_val_sets(df_train_val: pd.DataFrame) -> tuple:
     :param df_train_val: (Dataframe) containing both the input features and the target
     :return:
     """
-    df_train = df_train_val[df_train_val["Date"] <= "2010-12-31"]
-    df_val = df_train_val[df_train_val["Date"] >= "2011-01-01"]
+    df_train = df_train_val[df_train_val["Date"] < "2012-05-01"]
+    df_val = df_train_val[df_train_val["Date"] >= "2012-05-01"]
     x_train = df_train.drop(columns=["Weekly_Sales"])
     x_val = df_val.drop(columns=["Weekly_Sales"])
     y_train = df_train["Weekly_Sales"]
