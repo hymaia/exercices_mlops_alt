@@ -9,6 +9,10 @@ def train_model(x_train: pd.DataFrame, y_train: pd.Series) -> RandomForestRegres
     :param y_train: (Series) containing the train target
     :return: (RandomForestRegressor) trained model
     """
+    # features selection
+    print("features selection")
+    x_train = x_train.drop(columns=["Date", "IsHoliday", "Type"])
+
     print("training random forest")
     n_estimators = 30
     max_depth = 20
@@ -41,4 +45,5 @@ def predict_with_model(x_test: pd.DataFrame, model: RandomForestRegressor):
     :param model: (RandomForestRegressor) trained model
     :return: (Series) containing the predictions
     """
+    x_test = x_test.drop(columns=["Date", "IsHoliday", "Type"])
     return model.predict(x_test)

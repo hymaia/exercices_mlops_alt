@@ -3,7 +3,7 @@ import joblib
 from mlops_exo.gathering.task import DataCollector
 from mlops_exo.gathering.cleaning import DataCleaner
 from mlops_exo.features.task import FeaturesEngineering
-from mlops_exo.ml.task import train_model
+from mlops_exo.ml.task import train_model, predict_with_model
 from mlops_exo.ml.validation import split_train_and_val_sets, compute_metrics
 from mlops_exo.ml.utils import print_mlflow_artefact_uri
 import warnings
@@ -33,8 +33,8 @@ def main():
     features_transformer = FeaturesEngineering().fit(x_train, y_train)
     x_train = features_transformer.transform(x_train)
     x_val = features_transformer.transform(x_val)
-    print("save x_train_processed.xlsx")
-    print("save x_val_processed.xlsx")
+    print("save x_train_processed and x_val_processed")
+    print("save y_train and y_val")
     x_train.to_parquet("../data/processed/x_train_processed.parquet", index=True)
     x_val.to_parquet("../data/processed/x_val_processed.parquet", index=True)
     pd.DataFrame(y_train).to_parquet("../data/processed/y_train.parquet", index=True)
@@ -43,8 +43,8 @@ def main():
     # train model
     print("\n----- Train model and make predictions")
     model = train_model(x_train, y_train)
-    pred_train = pd.Series(model.predict(x_train), name="prediction", index=x_train.index)
-    pred_val = pd.Series(model.predict(x_val), name="prediction", index=x_val.index)
+    pred_train = pd.Series(predict_with_model(x_train, model), name="prediction", index=x_train.index)
+    pred_val = pd.Series(predict_with_model(x_val, model), name="prediction", index=x_val.index)
 
     # display metrics
     print("\n----- Evaluating model")

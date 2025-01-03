@@ -1,4 +1,3 @@
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import (
     mean_absolute_error,
     mean_squared_error,
@@ -36,7 +35,7 @@ def compute_metrics(y: pd.Series, pred: pd.Series, set="train"):
     mape = mean_absolute_percentage_error(y, pred)
     print(f"Mean Absolute Error ({set}) : {np.round(mae, 0)}")
     print(f"Mean Square Error ({set}) : {np.round(mse, 0)}")
-    print(f"Mean Absolute Percentage Error ({set}): {np.round(mape, 0)}")
+    print(f"Mean Absolute Percentage Error ({set}): {np.round(100 * mape, 2)} pct")
 
     # TODO : exercice 3.3 : ajoutez les hyper-paramètres dans MLflow
     # ------------------------------------------------------------------------------------

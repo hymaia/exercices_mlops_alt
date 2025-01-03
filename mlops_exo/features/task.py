@@ -33,6 +33,4 @@ class FeaturesEngineering:
         df_to_transform = self.dept_target_encoder.transform(df_to_transform)
         df_to_transform = self.store_target_encoder.transform(df_to_transform)
 
-        # features selection
-        df_to_transform = df_to_transform.drop(columns=["Date", "IsHoliday", "Type"])
         return df_to_transform
