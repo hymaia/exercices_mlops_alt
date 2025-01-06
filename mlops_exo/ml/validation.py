@@ -37,8 +37,5 @@ def compute_metrics(y: pd.Series, pred: pd.Series, set="train"):
     print(f"Mean Square Error ({set}) : {np.round(mse, 0)}")
     print(f"Mean Absolute Percentage Error ({set}): {np.round(100 * mape, 2)} pct")
 
-    # TODO : exercice 3.3 : ajoutez les hyper-paramètres dans MLflow
-    # ------------------------------------------------------------------------------------
-    #
-    #
-    # ------------------------------------------------------------------------------------
+    dict_metrics = {"mae_%s" % set: mae, "mse_%s" % set: mse, "mape_%s" % set: mape}
+    return dict_metrics

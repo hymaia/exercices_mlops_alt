@@ -11,22 +11,16 @@ def train_model(x_train: pd.DataFrame, y_train: pd.Series) -> RandomForestRegres
     """
     # features selection
     print("features selection")
-    x_train = x_train.drop(columns=["Date", "IsHoliday", "Type"])
 
     print("training random forest")
     n_estimators = 30
     max_depth = 20
     min_samples_split = 10
     random_state = 42
+    dict_params = {"n_estimators": n_estimators, "max_depth": max_depth,
+                   "min_samples_split": min_samples_split, "random_state": random_state}
 
-    # TODO : exercice 3.3 : ajoutez les hyper-paramètres dans MLflow
-    # ------------------------------------------------------------------------------------
-    #
-    #
-    #
-    #
-    # ------------------------------------------------------------------------------------
-
+    # print example
     print("observation example")
     print(x_train.iloc[0].to_json())
 
@@ -35,7 +29,7 @@ def train_model(x_train: pd.DataFrame, y_train: pd.Series) -> RandomForestRegres
         n_estimators=n_estimators, random_state=random_state, max_depth=max_depth, min_samples_split=min_samples_split, n_jobs=-1
     )
     model.fit(x_train, y_train)
-    return model
+    return model, dict_params
 
 
 def predict_with_model(x_test: pd.DataFrame, model: RandomForestRegressor):
@@ -45,5 +39,5 @@ def predict_with_model(x_test: pd.DataFrame, model: RandomForestRegressor):
     :param model: (RandomForestRegressor) trained model
     :return: (Series) containing the predictions
     """
-    x_test = x_test.drop(columns=["Date", "IsHoliday", "Type"])
+    # x_test = x_test.drop(columns=["Date", "IsHoliday", "Type"])
     return model.predict(x_test)
