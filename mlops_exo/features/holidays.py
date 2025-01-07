@@ -17,8 +17,9 @@ class HolidaysComputer:
     @staticmethod
     def compute_days_until_christmas(df: pd.DataFrame) -> pd.DataFrame:
         serie_current_date = pd.to_datetime(df["Date"], format="%Y-%m-%d")
+        serie_current_year = serie_current_date.dt.year.astype(int)
         serie_current_christmas = pd.to_datetime(
-            df["Year"].astype(str) + "-12-24", format="%Y-%m-%d"
+            serie_current_year.astype(str) + "-12-24", format="%Y-%m-%d"
         )
         df["Days_to_Christmas"] = (
             serie_current_christmas - serie_current_date
