@@ -89,13 +89,13 @@ def main():
     #
     # ------------------------------------------------------------------------------------
 
-    # TODO - exercice 3.3 : enregistrer le modèle et la signature
+    # TODO - exercice 4.1 : enregistrer le modèle et la signature
     # ------------------------------------------------------------------------------------
     #
     # ------------------------------------------------------------------------------------
 
     # affichage du lieu de sauvegarde des artefacts
-    # print_mlflow_artefact_uri() # TODO - exercice 3.3 : à ré-activer
+    # print_mlflow_artefact_uri() # TODO - exercice 4.1 : à ré-activer
 
 
 if __name__ == "__main__":
