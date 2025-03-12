@@ -94,8 +94,6 @@ def main():
     #
     # ------------------------------------------------------------------------------------
 
-    # affichage du lieu de sauvegarde des artefacts
-    # print_mlflow_artefact_uri() # TODO - exercice 4.1 : à ré-activer
 
 
 if __name__ == "__main__":
