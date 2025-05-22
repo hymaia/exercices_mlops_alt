@@ -1,10 +1,10 @@
 import pandas as pd
 import joblib
-from mlops_exo.gathering.task import DataCollector
-from mlops_exo.gathering.cleaning import DataCleaner
-from mlops_exo.features.task import FeaturesEngineering
-from mlops_exo.ml.task import train_model, predict_with_model
-from mlops_exo.ml.validation import split_train_and_val_sets, compute_metrics
+from gathering.task import DataCollector
+from gathering.cleaning import DataCleaner
+from features.task import FeaturesEngineering
+from ml.task import train_model, predict_with_model
+from ml.validation import split_train_and_val_sets, compute_metrics
 import warnings
 warnings.filterwarnings('ignore')
 
