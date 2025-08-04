@@ -1,11 +1,12 @@
 import pandas as pd
 import joblib
-from mlops_exo.gathering.task import DataCollector
-from mlops_exo.gathering.cleaning import DataCleaner
-from mlops_exo.features.task import FeaturesEngineering
-from mlops_exo.ml.task import train_model, predict_with_model
-from mlops_exo.ml.validation import split_train_and_val_sets, compute_metrics
+from gathering.task import DataCollector
+from gathering.cleaning import DataCleaner
+from features.task import FeaturesEngineering
+from ml.task import train_model, predict_with_model
+from ml.validation import split_train_and_val_sets, compute_metrics
 import warnings
+import os
 warnings.filterwarnings('ignore')
 
 
@@ -16,9 +17,10 @@ def main():
     """
     # load data and split train set
     print("----- Loading data")
-    path_train_set = "../data/raw/train.csv"
-    path_features_set = "../data/raw/features.csv"
-    path_stores_set = "../data/raw/stores.csv"
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    path_train_set = os.path.join(current_dir, "../data/raw/train.csv")
+    path_features_set = os.path.join(current_dir, "../data/raw/features.csv")
+    path_stores_set = os.path.join(current_dir, "../data/raw/stores.csv")
     df_train = DataCollector().gather_data(
         path_train_set, path_features_set, path_stores_set
     )
@@ -34,10 +36,10 @@ def main():
     x_val = features_transformer.transform(x_val)
     print("save x_train_processed and x_val_processed")
     print("save y_train and y_val")
-    x_train.to_parquet("../data/processed/x_train_processed.parquet", index=True)
-    x_val.to_parquet("../data/processed/x_val_processed.parquet", index=True)
-    pd.DataFrame(y_train).to_parquet("../data/processed/y_train.parquet", index=True)
-    pd.DataFrame(y_val).to_parquet("../data/processed/y_val.parquet", index=True)
+    x_train.to_parquet(os.path.join(current_dir, "../data/processed/x_train_processed.parquet"), index=True)
+    x_val.to_parquet(os.path.join(current_dir, "../data/processed/x_val_processed.parquet"), index=True)
+    pd.DataFrame(y_train).to_parquet(os.path.join(current_dir, "../data/processed/y_train.parquet"), index=True)
+    pd.DataFrame(y_val).to_parquet(os.path.join(current_dir, "../data/processed/y_val.parquet"), index=True)
 
     # features selection
     x_train = x_train.drop(columns=["Date", "IsHoliday", "Type"])
@@ -60,13 +62,13 @@ def main():
     print("\n----- save model, predictions and artifacts")
 
     # save predictions
-    pd.DataFrame(pred_train).to_parquet("../data/processed/pred_train.parquet", index=True)
-    pd.DataFrame(pred_val).to_parquet("../data/processed/pred_val.parquet", index=True)
+    pd.DataFrame(pred_train).to_parquet(os.path.join(current_dir, "../data/processed/pred_train.parquet"), index=True)
+    pd.DataFrame(pred_val).to_parquet(os.path.join(current_dir, "../data/processed/pred_val.parquet"), index=True)
 
     # save local artefacts
-    joblib.dump(cleaner, "../models/cleaner.pkl")
-    joblib.dump(features_transformer, "../models/features_transformer.pkl")
-    joblib.dump(model, "../models/model.pkl")
+    joblib.dump(cleaner, os.path.join(current_dir, "../models", "cleaner.pkl"))
+    joblib.dump(features_transformer, os.path.join(current_dir, "../models", "features_transformer.pkl"))
+    joblib.dump(model, os.path.join(current_dir, "../models", "model.pkl"))
 
     # save model
     # TODO - exercice 3.3 : lancer le run MLFlow et assignez un nom à l'exérimentation
