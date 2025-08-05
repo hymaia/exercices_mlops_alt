@@ -173,5 +173,5 @@ cython_debug/
 #.idea/
 
 # Mlflow
-mlruns/*
 */mlruns/*
+mlruns/*
