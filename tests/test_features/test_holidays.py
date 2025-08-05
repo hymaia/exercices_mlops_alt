@@ -44,13 +44,14 @@ def test_extract_dates_advanced(date_str, expected_year, expected_month, expecte
 # TODO 3.2 : ajouter tests unitaire 1er Décembre
 
 def test_compute_days_until_christmas_1st_december():
-
     # Given : input date is 1st December
-    #
+    holidays_computer = HolidaysComputer()
+    data = {"Date": ["2024-12-01"]}
+    df = pd.DataFrame(data)
+    expected_output = pd.DataFrame(data={"Date": ["2024-12-01"], "Days_to_Christmas": [23]})
 
     # When : compute days until Christmas
-    #
+    output = holidays_computer.compute_days_until_christmas(df)
 
     # Then : expected answer is 23
-    #
-    pass
+    pd.testing.assert_frame_equal(output, expected_output)
