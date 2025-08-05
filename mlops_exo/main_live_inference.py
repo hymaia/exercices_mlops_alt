@@ -6,7 +6,7 @@ import sys
 import warnings
 import mlflow
 import time
-
+from config import DATA_RAW
 warnings.filterwarnings("ignore")
 
 
@@ -153,7 +153,7 @@ mlflow.set_experiment("4.2 monitoring")
 with mlflow.start_run() as run:
     # on charge le jeu de test
     print("\n----- PARTIE 3 : monitoring and alerting")
-    df_test = pd.read_csv("../data/raw/test.csv")
+    df_test = pd.read_csv(DATA_RAW / "test.csv")
 
     # on envoie chaque observation tous les 0.1 secondes
     for i in range(100):

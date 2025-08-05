@@ -8,6 +8,7 @@ from ml.validation import split_train_and_val_sets, compute_metrics
 import warnings
 import os
 import mlflow
+from mlflow.models.signature import infer_signature
 from config import DATA_RAW, DATA_PROCESSED, MODELS_DIR
 warnings.filterwarnings('ignore')
 
@@ -79,8 +80,8 @@ def main():
     # Exercice 3.3 : lancer le run MLFlow et assignez un nom à l'exérimentation
     # ------------------------------------------------------------------------------------
     mlflow.set_experiment("Exo MLOps : training random forest")
-    with mlflow.start_run():
 
+    with mlflow.start_run() as run:
         # ------------------------------------------------------------------------------------
         # Exercice 3.3 : enregistrer les paramètres et se trouvant dans dict_params
         # ------------------------------------------------------------------------------------
@@ -101,10 +102,14 @@ def main():
         mlflow.log_artifact(DATA_PROCESSED / "x_val_processed.parquet")
         mlflow.log_artifact(DATA_PROCESSED / "y_train.parquet")
         mlflow.log_artifact(DATA_PROCESSED / "y_val.parquet")
+
         # ------------------------------------------------------------------------------------
-        # TODO - exercice 4.1 : enregistrer le modèle et la signature
+        # Exercice 4.1 : enregistrer le modèle et la signature
         # ------------------------------------------------------------------------------------
-        #
+        print(f"Experiment ID: {run.info.experiment_id}")
+        print(f"Run ID: {run.info.run_id}")
+        signature = infer_signature(x_train, pred_train)
+        mlflow.sklearn.log_model(model, name="model", signature=signature, input_example=x_train.iloc[0:1])
         # ------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
