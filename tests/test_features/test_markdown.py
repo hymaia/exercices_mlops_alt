@@ -7,19 +7,25 @@ from mlops_exo.features.markdown import add_total_markdown
 
 def test_add_total_markdowns_all_values():
     # Given : input markdowns
-    df = pd.DataFrame(data={
-        'MarkDown1': [10],
-        'MarkDown2': [20], 
-        'MarkDown3': [30],
-        'MarkDown4': [40],
-        'MarkDown5': [50]
-    })
-    expected_output = pd.DataFrame(data={'MarkDown1': [10],
-                                          'MarkDown2': [20], 
-                                          'MarkDown3': [30], 
-                                          'MarkDown4': [40], 
-                                          'MarkDown5': [50], 
-                                          'MarkdownsSum': [150]})
+    df = pd.DataFrame(
+        data={
+            "MarkDown1": [10],
+            "MarkDown2": [20],
+            "MarkDown3": [30],
+            "MarkDown4": [40],
+            "MarkDown5": [50],
+        }
+    )
+    expected_output = pd.DataFrame(
+        data={
+            "MarkDown1": [10],
+            "MarkDown2": [20],
+            "MarkDown3": [30],
+            "MarkDown4": [40],
+            "MarkDown5": [50],
+            "MarkdownsSum": [150],
+        }
+    )
 
     # When
     output = add_total_markdown(df)
@@ -31,11 +37,7 @@ def test_add_total_markdowns_all_values():
 # TODO 3.2 : tester la fonction add_total_markdown avec seulement 3 colonnes markdown dispos
 def test_add_total_markdowns_with_missing_markdowns():
     # Given : input markdowns - only 3 columns exist
-    df = pd.DataFrame(data={
-        'MarkDown1': [10],
-        'MarkDown2': [20], 
-        'MarkDown3': [30]
-    })
+    df = pd.DataFrame(data={"MarkDown1": [10], "MarkDown2": [20], "MarkDown3": [30]})
 
     # When
     try:
@@ -45,6 +47,6 @@ def test_add_total_markdowns_with_missing_markdowns():
         # Then - function should raise an error because MarkDown4 and MarkDown5 don't exist
         assert isinstance(e, KeyError)
         print(f"Error type: {type(e)}, Error message: {e}")
-    
+
     # Answer : yes, the function should be rewritten to handle the case where some markdowns are missing
     pass
