@@ -76,24 +76,24 @@ def main():
     joblib.dump(model, MODELS_DIR / "model.pkl")
 
     # save model
-    # TODO - exercice 3.3 : lancer le run MLFlow et assignez un nom à l'exérimentation
+    # Exercice 3.3 : lancer le run MLFlow et assignez un nom à l'exérimentation
     # ------------------------------------------------------------------------------------
     mlflow.set_experiment("Exo MLOps : training random forest")
     with mlflow.start_run():
-    # ------------------------------------------------------------------------------------
 
-        # TODO - exercice 3.3 : enregistrer les paramètres et se trouvant dans dict_params
+        # ------------------------------------------------------------------------------------
+        # Exercice 3.3 : enregistrer les paramètres et se trouvant dans dict_params
         # ------------------------------------------------------------------------------------
         mlflow.log_params(dict_params)
-        # ------------------------------------------------------------------------------------
 
-        # TODO - exercice 3.3 : enregistrer les métriques dans dict_metrics_train et dict_metrics_val
+        # ------------------------------------------------------------------------------------
+        # Exercice 3.3 : enregistrer les métriques dans dict_metrics_train et dict_metrics_val
         # ------------------------------------------------------------------------------------
         mlflow.log_metrics(dict_metrics_train)
         mlflow.log_metrics(dict_metrics_val)
-        # ------------------------------------------------------------------------------------
 
-        # TODO - exercice 3.3 : enregistrer les artefacts
+        # ------------------------------------------------------------------------------------
+        # Exercice 3.3 : enregistrer les artefacts
         # ------------------------------------------------------------------------------------
         mlflow.log_artifact(MODELS_DIR / "cleaner.pkl")
         mlflow.log_artifact(MODELS_DIR / "features_transformer.pkl")
@@ -102,11 +102,10 @@ def main():
         mlflow.log_artifact(DATA_PROCESSED / "y_train.parquet")
         mlflow.log_artifact(DATA_PROCESSED / "y_val.parquet")
         # ------------------------------------------------------------------------------------
-
-    # TODO - exercice 4.1 : enregistrer le modèle et la signature
-    # ------------------------------------------------------------------------------------
-    #
-    # ------------------------------------------------------------------------------------
+        # TODO - exercice 4.1 : enregistrer le modèle et la signature
+        # ------------------------------------------------------------------------------------
+        #
+        # ------------------------------------------------------------------------------------
 
 
 if __name__ == "__main__":
