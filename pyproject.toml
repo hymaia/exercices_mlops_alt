@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "exercices-mlops"
+version = "0.1.0"
+description = ""
+authors = ["Anastasia Barkova <anastasia.barkova@hymaia.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pandas = "^2.3.1"
+numpy = "^2.3.2"
+mlflow = "^3.2.0"
+scikit-learn = "^1.7.1"
+joblib = "^1.5.1"
+coverage = "^7.10.2"
+pyarrow = "^21.0.0"
+evidently = "^0.7.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
