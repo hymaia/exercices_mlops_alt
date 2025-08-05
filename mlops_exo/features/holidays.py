@@ -30,7 +30,7 @@ class HolidaysComputer:
     def compute_days_until_thanksgiving(df: pd.DataFrame) -> pd.DataFrame:
         serie_current_date = pd.to_datetime(df["Date"], format="%Y-%m-%d")
         serie_current_christmas = pd.to_datetime(
-            df["Year"].astype(str) + "-11-24", format="%Y-%m-%d"
+            df["Year"].astype(str) + "-11-25", format="%Y-%m-%d"
         )
         df["Days_to_Thansksgiving"] = (
             serie_current_christmas - serie_current_date
