@@ -109,7 +109,7 @@ def main():
         print(f"Experiment ID: {run.info.experiment_id}")
         print(f"Run ID: {run.info.run_id}")
         signature = infer_signature(x_train, pred_train)
-        mlflow.sklearn.log_model(model, signature=signature, input_example=x_train.iloc[0:1])
+        mlflow.sklearn.log_model(model, name="model", signature=signature, input_example=x_train.iloc[0:1])
         # ------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
