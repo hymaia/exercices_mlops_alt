@@ -80,7 +80,8 @@ def main():
     # Exercice 3.3 : lancer le run MLFlow et assignez un nom à l'exérimentation
     # ------------------------------------------------------------------------------------
     mlflow.set_experiment("Exo MLOps : training random forest")
-    with mlflow.start_run():
+
+    with mlflow.start_run() as run:
         # ------------------------------------------------------------------------------------
         # Exercice 3.3 : enregistrer les paramètres et se trouvant dans dict_params
         # ------------------------------------------------------------------------------------
@@ -105,8 +106,10 @@ def main():
         # ------------------------------------------------------------------------------------
         # Exercice 4.1 : enregistrer le modèle et la signature
         # ------------------------------------------------------------------------------------
+        print(f"Experiment ID: {run.info.experiment_id}")
+        print(f"Run ID: {run.info.run_id}")
         signature = infer_signature(x_train, pred_train)
-        mlflow.sklearn.log_model(model, "model", signature=signature, input_example=x_train.iloc[0:1])
+        mlflow.sklearn.log_model(model, signature=signature, input_example=x_train.iloc[0:1])
         # ------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
