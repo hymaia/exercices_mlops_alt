@@ -85,7 +85,7 @@ data_collector = joblib.load(f"{artifact_uri}/data_collector.pkl")
 # ------------------------------------------------------------------------------------
 
 # 4.1.D : Ecrire la fonction d'application des artefacts (prepare_and_transform_data)
-def prepare_and_transform_data(df_sales= pd.DataFrame()) -> pd.DataFrame:
+def prepare_and_transform_data(df_sales: pd.DataFrame, df_features: pd.DataFrame, df_stores: pd.DataFrame) -> pd.DataFrame:
     df_sales = data_collector.merge_sales_and_features(df_sales, df_features)
     df_sales = data_collector.merge_sales_and_stores(df_sales, df_stores)
     cleaned_data = cleaner.transform(df_sales)
@@ -96,7 +96,7 @@ def prepare_and_transform_data(df_sales= pd.DataFrame()) -> pd.DataFrame:
 
 # 4.1.D : appliquer la fonction d'application des artefacts (prepare_and_transform_data)
 # ------------------------------------------------------------------------------------
-df_sales_2 = prepare_and_transform_data(df_sales_2)
+df_sales_2 = prepare_and_transform_data(df_sales_2, df_features, df_stores)
 # ------------------------------------------------------------------------------------
 
 

@@ -2,18 +2,26 @@ import pandas as pd
 from evidently import Report, Dataset, DataDefinition, Regression
 from evidently.presets import DataDriftPreset, RegressionPreset
 
-from config import REPORTS_DIR
+from config import DATA_PROCESSED, REPORTS_DIR
 
 if __name__ == "__main__":
-    # TODO - exercice 4.3.A : créer les jeux de référence et current
+    # Exercice 4.3.A : créer les jeux de référence et current
     # ------------------------------------------------------------------------------------
-    #
-    #
-    #
-    #
-    #
-    #
-    #
+    x_train_processed = pd.read_parquet(DATA_PROCESSED / "x_train_processed.parquet").set_index("Date")
+    x_val_processed = pd.read_parquet(DATA_PROCESSED / "x_val_processed.parquet").set_index("Date")
+    y_train = pd.read_parquet(DATA_PROCESSED / "y_train.parquet")
+    y_val = pd.read_parquet(DATA_PROCESSED / "y_val.parquet")
+    pred_train = pd.read_parquet(DATA_PROCESSED / "pred_train.parquet")
+    pred_val = pd.read_parquet(DATA_PROCESSED / "pred_val.parquet")
+
+    y_train.index= x_train_processed.index
+    y_val.index = x_val_processed.index
+
+    pred_train.index = x_train_processed.index
+    pred_val.index = x_val_processed.index
+
+    df_reference = pd.concat([x_train_processed, y_train, pred_train], axis=1)
+    df_current = pd.concat([x_val_processed, y_val, pred_val], axis=1)
     # ------------------------------------------------------------------------------------
 
     # TODO - exercice 4.3.B : réaliser le ColumnMapping
