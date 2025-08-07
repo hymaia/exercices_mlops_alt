@@ -98,7 +98,7 @@ artifact_uri = f"mlruns/0/{mlflow_run_id}/artifacts"
 
 
 # Envoyez une requête POST à l'URL du modèle
-data_json_2 = {"dataframe_records": df_sales_2.to_dict(orient="records")}
+data_json_2 = {"dataframe_records": df_sales_2.astype(str).to_dict(orient="records")}
 response = requests.post("http://0.0.0.0:5050/invocations", json=data_json_2)
 
 # Affichez la prédiction

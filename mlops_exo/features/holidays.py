@@ -19,7 +19,7 @@ class HolidaysComputer:
         serie_current_date = pd.to_datetime(df["Date"], format="%Y-%m-%d")
         serie_current_year = serie_current_date.dt.year.astype(int)
         serie_current_christmas = pd.to_datetime(
-            serie_current_year.astype(str) + "-12-24", format="%Y-%m-%d"
+            serie_current_year.astype(str) + "-12-25", format="%Y-%m-%d"
         )
         df["Days_to_Christmas"] = (
             serie_current_christmas - serie_current_date
