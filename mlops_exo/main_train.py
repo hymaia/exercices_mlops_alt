@@ -8,6 +8,7 @@ from ml.validation import split_train_and_val_sets, compute_metrics
 import warnings
 import os
 import mlflow
+from mlflow.models.signature import infer_signature
 from config import DATA_RAW, DATA_PROCESSED, MODELS_DIR
 warnings.filterwarnings('ignore')
 
@@ -102,9 +103,11 @@ def main():
         mlflow.log_artifact(DATA_PROCESSED / "y_train.parquet")
         mlflow.log_artifact(DATA_PROCESSED / "y_val.parquet")
         # ------------------------------------------------------------------------------------
+
         # TODO - exercice 4.1 : enregistrer le modèle et la signature
         # ------------------------------------------------------------------------------------
-        #
+        signature = infer_signature(x_train, pred_train)
+        mlflow.sklearn.log_model(model, "model", signature=signature, input_example=x_train.iloc[0:1])
         # ------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
