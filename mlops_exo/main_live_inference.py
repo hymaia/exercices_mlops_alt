@@ -111,9 +111,6 @@ print("Prédiction obtenue : %s " % response.json())
 # PART 3 : alerting et monitoring                        #
 ##########################################################
 
-sys.exit(0)  # TODO 4.2 : supprimez cette ligne
-
-
 def predict_with_monitoring(data_json_to_predict: dict):
     """
     Predicts a given observations, logs the latency and the error
@@ -141,10 +138,11 @@ def log_response_info(latency: float, is_error: float, is_very_high_value: float
     """
     Logs the metrics latency, is_error and is_very_high_value is MLFlow.
     """
-    # TODO 4.2 : logguez les métriques dans MLFLow
+    # Logguez les métriques dans MLFLow
     # ------------------------------------------------------------------------------------
-    #
-    #
+    mlflow.log_metric("latency", latency)
+    mlflow.log_metric("is_error", is_error)
+    mlflow.log_metric("is_very_high_value", is_very_high_value)
     # ------------------------------------------------------------------------------------
 
 
@@ -153,6 +151,8 @@ mlflow.set_experiment("4.2 monitoring")
 with mlflow.start_run() as run:
     # on charge le jeu de test
     print("\n----- PARTIE 3 : monitoring and alerting")
+    print(f"Run id: {run.info.run_id}")
+    print(f"Run name: {run.info.run_name}")
     df_test = pd.read_csv(DATA_RAW / "test.csv")
 
     # on envoie chaque observation tous les 0.1 secondes
