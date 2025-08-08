@@ -55,9 +55,6 @@ print(">>> Prédiction obtenue : %s " % response.json())
 ##########################################################
 # PART 2 : inference with an inference pipeline          #
 ##########################################################
-
-sys.exit(0)  # TODO 4.1.D : supprimez cette ligne
-
 print("\n----- PARTIE 2 : prédiction avec un script d'inférence")
 data_sales_2 = {
     "dataframe_records": [
@@ -73,30 +70,33 @@ df_sales_2 = pd.DataFrame(data_sales_2["dataframe_records"])
 
 
 # Chemin vers le run MLflow
-mlflow_run_id = "daa3e9c197674fada67fe649688186e3"  # TODO 4.1.D : placez le mlflow run id de votre modèle.
-artifact_uri = f"mlruns/0/{mlflow_run_id}/artifacts"
+experiment_id = "141226188525011380" # L'experiment id de votre modèle.
+mlflow_run_id = "261565cbd9e34a3d9038cba159434dee"  # Mlflow run id de votre modèle.
+artifact_uri = f"mlruns/{experiment_id}/{mlflow_run_id}/artifacts"
 
 
-# TODO 4.1.D : chargez tous les artefacts
+# 4.1.D : Chargez tous les artefacts
 # ------------------------------------------------------------------------------------
-#
-#
-#
-#
-# ------------------------------------------------------------------------------------
-
-# TODO 4.1.D : écrire la fonction d'application des artefacts (prepare_and_transform_data)
-# def prepare_and_transform_data():
-# ------------------------------------------------------------------------------------
-#
-#
-#
-#
+df_features = pd.read_csv(f"{artifact_uri}/features.csv")
+df_stores = pd.read_csv(f"{artifact_uri}/stores.csv")
+features_transformer = joblib.load(f"{artifact_uri}/features_transformer.pkl")
+cleaner = joblib.load(f"{artifact_uri}/cleaner.pkl")
+data_collector = joblib.load(f"{artifact_uri}/data_collector.pkl")
 # ------------------------------------------------------------------------------------
 
-# TODO 4.1.D : appliquer la fonction d'application des artefacts (prepare_and_transform_data)
+# 4.1.D : Ecrire la fonction d'application des artefacts (prepare_and_transform_data)
+def prepare_and_transform_data(df_sales= pd.DataFrame()) -> pd.DataFrame:
+    df_sales = data_collector.merge_sales_and_features(df_sales, df_features)
+    df_sales = data_collector.merge_sales_and_stores(df_sales, df_stores)
+    cleaned_data = cleaner.transform(df_sales)
+    transformed_data = features_transformer.transform(cleaned_data)
+    return transformed_data
+
 # ------------------------------------------------------------------------------------
-#
+
+# 4.1.D : appliquer la fonction d'application des artefacts (prepare_and_transform_data)
+# ------------------------------------------------------------------------------------
+df_sales_2 = prepare_and_transform_data(df_sales_2)
 # ------------------------------------------------------------------------------------
 
 

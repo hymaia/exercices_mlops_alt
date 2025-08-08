@@ -75,6 +75,7 @@ def main():
     joblib.dump(cleaner, MODELS_DIR / "cleaner.pkl")
     joblib.dump(features_transformer, MODELS_DIR / "features_transformer.pkl")
     joblib.dump(model, MODELS_DIR / "model.pkl")
+    joblib.dump(DataCollector(), MODELS_DIR / "data_collector.pkl")
 
     # save model
     # Exercice 3.3 : lancer le run MLFlow et assignez un nom à l'exérimentation
@@ -104,13 +105,20 @@ def main():
         mlflow.log_artifact(DATA_PROCESSED / "y_val.parquet")
 
         # ------------------------------------------------------------------------------------
-        # Exercice 4.1 : enregistrer le modèle et la signature
+        # Exercice 4.1.A : enregistrer le modèle et la signature
         # ------------------------------------------------------------------------------------
         print(f"Experiment ID: {run.info.experiment_id}")
         print(f"Run ID: {run.info.run_id}")
         signature = infer_signature(x_train, pred_train)
         mlflow.sklearn.log_model(model, name="model", signature=signature, input_example=x_train.iloc[0:1])
         # ------------------------------------------------------------------------------------
-
+        
+        # Exercice 4.1.C : Enregistrer les artefact manquants
+        # ------------------------------------------------------------------------------------
+        mlflow.log_artifact(path_features_set)
+        mlflow.log_artifact(path_stores_set)
+        mlflow.log_artifact(MODELS_DIR / "data_collector.pkl")
+        # ------------------------------------------------------------------------------------
+    
 if __name__ == "__main__":
     main()
