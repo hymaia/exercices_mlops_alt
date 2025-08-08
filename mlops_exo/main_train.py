@@ -49,8 +49,12 @@ def main():
     # train model
     print("\n----- Train model and make predictions")
     model, dict_params = train_model(x_train, y_train)
-    pred_train = pd.Series(predict_with_model(x_train, model), name="prediction", index=x_train.index)
-    pred_val = pd.Series(predict_with_model(x_val, model), name="prediction", index=x_val.index)
+    pred_train = pd.Series(
+        predict_with_model(x_train, model), name="prediction", index=x_train.index
+    )
+    pred_val = pd.Series(
+        predict_with_model(x_val, model), name="prediction", index=x_val.index
+    )
 
     # display metrics
     print("\n----- Evaluating model")
@@ -96,7 +100,6 @@ def main():
     # ------------------------------------------------------------------------------------
     #
     # ------------------------------------------------------------------------------------
-
 
 
 if __name__ == "__main__":

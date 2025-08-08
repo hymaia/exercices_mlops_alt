@@ -5,7 +5,6 @@ from evidently.presets import DataDriftPreset, RegressionPreset
 from config import REPORTS_DIR
 
 if __name__ == "__main__":
-
     # TODO - exercice 4.3.A : créer les jeux de référence et current
     # ------------------------------------------------------------------------------------
     #
