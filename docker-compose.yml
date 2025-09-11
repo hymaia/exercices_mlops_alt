@@ -1,0 +1,15 @@
+services:
+  model-server:
+    build: .
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./mlruns:/app/mlruns
+    
+  mlflow-ui:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./mlruns:/app/mlruns
+    command: ["poetry", "run", "mlflow", "ui", "--host", "0.0.0.0", "--port", "8000"]
