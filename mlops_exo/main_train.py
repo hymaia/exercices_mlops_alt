@@ -7,7 +7,16 @@ from ml.task import train_model, predict_with_model
 from ml.validation import split_train_and_val_sets, compute_metrics
 import warnings
 import os
+from pathlib import Path 
+import mlflow 
 warnings.filterwarnings('ignore')
+
+warnings.filterwarnings("ignore")
+
+# Configure MLflow for Codespaces - use absolute path to mlruns
+project_root = Path(__file__).parent.parent
+mlruns_path = project_root / "mlops_exo" / "mlruns"
+mlflow.set_tracking_uri(f"file://{mlruns_path.absolute()}")
 
 
 def main():
