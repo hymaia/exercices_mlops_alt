@@ -1,6 +1,7 @@
 import pandas as pd
-from evidently import Report, Dataset, DataDefinition, Regression
-from evidently.presets import DataDriftPreset, RegressionPreset
+from evidently import ColumnMapping
+from evidently.report import Report
+from evidently.metric_preset import DataDriftPreset, RegressionPreset
 
 from config import DATA_PROCESSED, REPORTS_DIR
 
@@ -64,18 +65,17 @@ if __name__ == "__main__":
         "ChristmasWeek",
     ]
 
-    data_def = DataDefinition(
-        numerical_columns=numerical_features,
-        categorical_columns=categorical_features,
-        regression=[Regression(target=target, prediction=prediction)],
+    column_mapping = ColumnMapping(
+        numerical_features=numerical_features,
+        categorical_features=categorical_features,
+        target=target,
+        prediction=prediction,
     )
 
-    # Convert pandas DataFrames to Evidently Dataset objects
-    dataset_reference = Dataset.from_pandas(df_reference, data_definition=data_def)
-    dataset_current = Dataset.from_pandas(df_current, data_definition=data_def)
-    dataset_current_sample = Dataset.from_pandas(
-        df_current.sample(10_000, random_state=42), data_definition=data_def
-    )
+    # Prepare data for evidently
+    df_reference_subset = df_reference
+    df_current_subset = df_current
+    df_current_sample = df_current.sample(10_000, random_state=42)
 
     # ------------------------------------------------------------------------------------
     # créer un rapport de Model Drift
@@ -84,10 +84,10 @@ if __name__ == "__main__":
             RegressionPreset(),
         ],
     )
-    eval_model_drift = model_drift_report.run(dataset_current_sample, reference_data=None)
-    eval_model_drift.save_html(str(REPORTS_DIR / "model_drift_report.html"))
+    model_drift_report.run(current_data=df_current_sample, reference_data=None, column_mapping=column_mapping)
+    model_drift_report.save_html(str(REPORTS_DIR / "model_drift_report.html"))
 
     # Créer un rapport de Data Drift
     data_drift_report = Report(metrics=[DataDriftPreset()])
-    eval_data_drift = data_drift_report.run(dataset_current, dataset_reference)
-    eval_data_drift.save_html(str(REPORTS_DIR / "data_drift_report.html"))
+    data_drift_report.run(current_data=df_current_subset, reference_data=df_reference_subset, column_mapping=column_mapping)
+    data_drift_report.save_html(str(REPORTS_DIR / "data_drift_report.html"))
