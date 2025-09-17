@@ -2,7 +2,9 @@ import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 
 
-def train_model(x_train: pd.DataFrame, y_train: pd.Series) -> RandomForestRegressor:
+def train_model(
+    x_train: pd.DataFrame, y_train: pd.Series, dict_params: dict
+) -> RandomForestRegressor:
     """
     Trains a RandomForestRegressor on the train dataset
     :param x_train: (DataFrame) containing the train features
@@ -13,12 +15,6 @@ def train_model(x_train: pd.DataFrame, y_train: pd.Series) -> RandomForestRegres
     print("features selection")
 
     print("training random forest")
-    n_estimators = 30
-    max_depth = 20
-    min_samples_split = 10
-    random_state = 42
-    dict_params = {"n_estimators": n_estimators, "max_depth": max_depth,
-                   "min_samples_split": min_samples_split, "random_state": random_state}
 
     # print example
     print("observation example")
@@ -26,10 +22,14 @@ def train_model(x_train: pd.DataFrame, y_train: pd.Series) -> RandomForestRegres
 
     # entrainement du modèle
     model = RandomForestRegressor(
-        n_estimators=n_estimators, random_state=random_state, max_depth=max_depth, min_samples_split=min_samples_split, n_jobs=-1
+        n_estimators=dict_params["n_estimators"],
+        random_state=dict_params["random_state"],
+        max_depth=dict_params["max_depth"],
+        min_samples_split=dict_params["min_samples_split"],
+        n_jobs=dict_params["n_jobs"],
     )
     model.fit(x_train, y_train)
-    return model, dict_params
+    return model
 
 
 def predict_with_model(x_test: pd.DataFrame, model: RandomForestRegressor):
