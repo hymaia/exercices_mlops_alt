@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "exercices-mlops"
+name = "mlops_exo"
 version = "0.1.0"
 description = ""
 authors = ["Anastasia Barkova <anastasia.barkova@hymaia.com>"]
