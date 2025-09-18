@@ -105,31 +105,37 @@ def main():
     joblib.dump(DataCollector(), MODELS_DIR / "data_collector.pkl")
 
     # save model
-    # TODO - exercice 3.3 : lancer le run MLFlow et assignez un nom à l'exérimentation
     # ------------------------------------------------------------------------------------
-    #
+    # Exercice 3.3 : enregistrer les paramètres et se trouvant dans dict_params
+    # ------------------------------------------------------------------------------------
+    mlflow.log_params(DICT_PARAMS)
+
+    # ------------------------------------------------------------------------------------
+    # Exercice 3.3 : enregistrer les métriques dans dict_metrics_train et dict_metrics_val
+    # ------------------------------------------------------------------------------------
+    mlflow.log_metrics(dict_metrics_train)
+    mlflow.log_metrics(dict_metrics_val)
+
+    # ------------------------------------------------------------------------------------
+    # Exercice 3.3 : enregistrer les artefacts
+    # ------------------------------------------------------------------------------------
+    mlflow.log_artifact(MODELS_DIR / "cleaner.pkl")
+    mlflow.log_artifact(MODELS_DIR / "features_transformer.pkl")
+    mlflow.log_artifact(DATA_PROCESSED / "x_train_processed.parquet")
+    mlflow.log_artifact(DATA_PROCESSED / "x_val_processed.parquet")
+    mlflow.log_artifact(DATA_PROCESSED / "y_train.parquet")
+    mlflow.log_artifact(DATA_PROCESSED / "y_val.parquet")
+
+    # ------------------------------------------------------------------------------------
+    # Exercice 4.1.A : enregistrer le modèle et la signature
     # ------------------------------------------------------------------------------------
 
-    # TODO - exercice 3.3 : enregistrer les paramètres et se trouvant dans dict_params
     # ------------------------------------------------------------------------------------
-    #
-    # ------------------------------------------------------------------------------------
-
-    # TODO - exercice 3.3 : enregistrer les métriques dans dict_metrics_train et dict_metrics_val
-    # ------------------------------------------------------------------------------------
-    #
+    
+    # Exercice 4.1.C : Enregistrer les artefact manquants
     # ------------------------------------------------------------------------------------
 
-    # TODO - exercice 3.3 : enregistrer les artefacts
     # ------------------------------------------------------------------------------------
-    #
-    # ------------------------------------------------------------------------------------
-
-    # TODO - exercice 4.1 : enregistrer le modèle et la signature
-    # ------------------------------------------------------------------------------------
-    #
-    # ------------------------------------------------------------------------------------
-
 
 
 if __name__ == "__main__":
