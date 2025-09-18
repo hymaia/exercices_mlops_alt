@@ -1,0 +1,11 @@
+services:
+  model-server:
+    build: .
+    ports:
+    volumes:
+    
+  mlflow-ui:
+    build: .
+    ports:
+    volumes:
+    command: 
