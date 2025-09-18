@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/anastasia/PycharmProjects/Hymaia%20projets%20internes/exercices_mlops_alt/mlruns/815211928943405759/cdfa4d1d33744585ab40cc3935d0c978/artifacts
+end_time: 1758200856676
+entry_point_name: ''
+experiment_id: '815211928943405759'
+lifecycle_stage: active
+run_id: cdfa4d1d33744585ab40cc3935d0c978
+run_name: nebulous-donkey-35
+run_uuid: cdfa4d1d33744585ab40cc3935d0c978
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758200843918
+status: 3
+tags: []
+user_id: anastasia
