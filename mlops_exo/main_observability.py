@@ -31,18 +31,10 @@ if __name__ == "__main__":
 
     # TODO - exercice 4.3.B : réaliser le ColumnMapping
     # ------------------------------------------------------------------------------------
-    # target =
-    # prediction =
-    # date_col =
-    #  numerical_features = []
-    # categorical_features = []
-    # column_mapping = ColumnMapping(
-    #    target=target,
-    #    prediction=prediction,
-    #    numerical_features=numerical_features,
-    #    categorical_features=categorical_features,
-    #    datetime=date_col
-    # )
+    #
+    #
+    #
+    #
     # ------------------------------------------------------------------------------------
 
     # créer un rapport de Model Drift
