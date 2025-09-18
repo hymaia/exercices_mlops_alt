@@ -2,10 +2,15 @@ services:
   model-server:
     build: .
     ports:
+    # TODO : 4.5 ajouter le port 5000
     volumes:
+    # TODO : 4.5 ajouter le volume qui contient les modèles
     
   mlflow-ui:
     build: .
     ports:
+    # TODO : 4.5 ajouter le port 8000
     volumes:
+    # TODO : 4.5 ajouter le volume qui contient les modèles
     command: 
+    # TODO : 4.5 ajouter la commande qui lance le mlflow ui

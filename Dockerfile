@@ -1,3 +1,5 @@
+# TODO : 4.5 ajouter le différentes sections du Dockerfile
+
 FROM 
 
 WORKDIR 
